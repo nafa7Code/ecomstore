@@ -1,0 +1,72 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container py-5">
+  <h2 class="mb-4 text-center">🛒 سلة المشتريات</h2>
+
+  {% if cart_items %}
+  <table class="table table-bordered text-center align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>المنتج</th>
+        <th>الكمية</th>
+        <th>السعر للوحدة</th>
+        <th>الإجمالي</th>
+        <th>إزالة</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart_items %}
+      <tr>
+        <td>{{ item.product.name }}</td>
+        <td>
+          <form
+            method="post"
+            action="{% url 'update_cart_quantity' item.product.id %}"
+          >
+            {% csrf_token %}
+            <div class="input-group input-group-sm">
+              <input
+                type="number"
+                name="quantity"
+                value="{{ item.quantity }}"
+                min="1"
+                class="form-control text-center"
+                style="width: 70px"
+              />
+              <button type="submit" class="btn btn-outline-primary">
+                تحديث
+              </button>
+            </div>
+          </form>
+        </td>
+        <td>{{ item.product.price }} ريال</td>
+        <td>{{ item.item_total }} ريال</td>
+        <td>
+          <a
+            href="{% url 'remove_from_cart' item.product.id %}"
+            class="btn btn-sm btn-danger"
+            >🗑️</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="text-end fw-bold fs-5">المجموع الكلي: {{ total_price }} ريال</div>
+
+  <!-- ✅ حماية زر إتمام الطلب -->
+  {% if user.is_authenticated %}
+  <div class="text-end mt-4">
+    <a href="{% url 'create_order' %}" class="btn btn-success btn-lg"
+      >إتمام الطلب</a
+    >
+  </div>
+  {% else %}
+  <p class="text-center mt-4">
+    <a href="{% url 'login' %}">🔐 سجل الدخول</a> لإتمام عملية الشراء.
+  </p>
+  {% endif %} {% else %}
+  <p class="text-center text-muted">سلة المشتريات فارغة.</p>
+  {% endif %}
+</div>
+{% endblock %}

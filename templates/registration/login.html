@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% block content %}
+<div class="container py-5" style="max-width: 500px">
+  <h2 class="mb-4 text-center">🔐 تسجيل الدخول</h2>
+  <form method="post" novalidate>
+    {% csrf_token %} {{ form.non_field_errors }}
+    <div class="mb-3">{{ form.username.label_tag }} {{ form.username }}</div>
+    <div class="mb-3">{{ form.password.label_tag }} {{ form.password }}</div>
+    <button type="submit" class="btn btn-primary w-100">دخول</button>
+  </form>
+  <p class="mt-3 text-center">
+    ليس لديك حساب؟ <a href="{% url 'signup' %}">إنشاء حساب جديد</a>
+  </p>
+</div>
+{% endblock %}

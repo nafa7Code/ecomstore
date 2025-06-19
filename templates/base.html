@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}متجر إلكتروني{% endblock %}</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'product_list' %}">EcomStore</a>
+
+        <div class="d-flex align-items-center ms-auto">
+          <a
+            class="btn btn-outline-secondary me-2"
+            href="{% url 'cart_detail' %}"
+          >
+            عرض السلة 🛒
+          </a>
+
+          {% if user.is_authenticated %}
+          <span class="me-2 text-muted">مرحبًا، {{ user.username }}</span>
+          <form method="post" action="{% url 'logout' %}" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger">
+              تسجيل الخروج 🔒
+            </button>
+          </form>
+          {% else %}
+          <a class="btn btn-outline-primary me-2" href="{% url 'login' %}">
+            تسجيل الدخول 🔑
+          </a>
+          <a class="btn btn-outline-success" href="{% url 'signup' %}">
+            إنشاء حساب 📝
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">{% block content %}{% endblock %}</div>
+  </body>
+</html>

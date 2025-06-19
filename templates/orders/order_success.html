@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container py-5 text-center">
+  <h2>✅ تم إتمام الطلب بنجاح!</h2>
+  <p>رقم الطلب: <strong>{{ order.id }}</strong></p>
+  <p>تم حفظ تفاصيل الطلب ويمكنك متابعتها من لوحة الحساب.</p>
+  <a href="{% url 'product_list' %}" class="btn btn-primary mt-3"
+    >العودة للمتجر</a
+  >
+</div>
+{% endblock %}
