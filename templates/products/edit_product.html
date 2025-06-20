@@ -2,16 +2,15 @@
 {% load static %}
 {% load widget_tweaks %}
 
-{% block title %}{{ product.name|default:"إضافة منتج جديد" }}{% endblock %}
+{% block title %}تعديل {{ product.name }}{% endblock %}
 
 {% block content %}
 <div class="container py-5">
-  <h2 class="mb-4 text-center">🛠️ {{ product.name|default:"إضافة منتج جديد" }}</h2>
+  <h2 class="mb-4 text-center">✏️ تعديل {{ product.name }}</h2>
 
   <form method="post" enctype="multipart/form-data" class="shadow p-4 rounded bg-light">
     {% csrf_token %}
-    
-    <!-- عرض الحقول -->
+
     {% for field in form %}
       <div class="mb-3">
         <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
@@ -30,12 +29,12 @@
 
     <!-- حقل الصورة يدويًا -->
     <div class="mb-3">
-      <label class="form-label" for="id_image">صورة المنتج</label>
-      <input type="file" name="image" accept="image/*" class="form-control" id="id_image" required>
+      <label class="form-label" for="id_image">صورة جديدة (اختياري)</label>
+      <input type="file" name="image" accept="image/*" class="form-control" id="id_image">
     </div>
 
     <div class="text-end">
-      <button type="submit" class="btn btn-success">💾 حفظ</button>
+      <button type="submit" class="btn btn-success">💾 تحديث</button>
     </div>
   </form>
 </div>
